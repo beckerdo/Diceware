@@ -55,10 +55,10 @@ public class Diceware {
 	
 	// options
 	public static boolean strictMode = false; // uses dice method, not computer shortCuts
-	public static WordOption specialCharEntropy = WordOption.ONE; // use EnumSet.of( ONE, TWO ) for multiples	
-    public static int numWords = 1;
-	public static DictionaryOption dictionary = DictionaryOption.D8K;
-	public static String dictionaryName = DICT_D8K_NAME;
+	public static WordOption specialCharEntropy = WordOption.NONE; // use EnumSet.of( ONE, TWO ) for multiples	
+    public static int numWords = 6;
+	public static DictionaryOption dictionary = DictionaryOption.STD;
+	public static String dictionaryName = DICT_STD_NAME;
 	
 	public static void main(String[] args) throws Exception {
 		// Parse command line options
@@ -121,7 +121,13 @@ public class Diceware {
 	}
 	
 	// TODO Implement strict mode
-	
+	/** Generates a random passphrase from the wordList. 
+	 * 
+	 * @param wordList dictionary of random words
+	 * @param numWords number of words in passphrase
+	 * @param specialChars cardinality of special characters to use
+	 * @return
+	 */
 	public static String getPassPhrase( final List<String> wordList, int numWords, WordOption specialChars) {
 		StringBuilder sb = new StringBuilder();
 		
@@ -201,6 +207,7 @@ public class Diceware {
 	    }
 	}
 	
+	/** Returns a single random character from the SPECIAL_CHARS string. */
     public static char getRandomSpecialChar() {
     	int pos = random.nextInt( SPECIAL_CHARS.length() );
     	return SPECIAL_CHARS.charAt( pos );
