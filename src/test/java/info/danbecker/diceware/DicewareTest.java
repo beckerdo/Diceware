@@ -194,4 +194,14 @@ public class DicewareTest {
 
 	}
 
+	@Test
+    public void testLeetCharRandomization() {
+		final String TEST_WORD = "foo";
+		final String RANDOMIZED_WORD = Diceware.updateLeetChar( TEST_WORD, 1 );
+		assertEquals( "random char", "f0o", RANDOMIZED_WORD);		
+		
+		final String RANDOMIZED_WORD2 = Diceware.updateLeet( TEST_WORD );
+		assertEquals( "random char", "=00", RANDOMIZED_WORD2);		
+	}
+
 }

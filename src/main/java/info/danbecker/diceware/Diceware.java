@@ -35,6 +35,7 @@ public class Diceware {
 	
 	public static final String WORD_DELIM = " ";
 	public static final String SPECIAL_CHARS = "~!#$%^&*()-=+[]\\{}:;\"'<>?/0123456789";
+	public static final String LEET_CHARS = "4ßçÐ€=6#1/<£mñ0þqr5±μ^«χ¥2"; // "abcdefghijklmnopqrstuzwxyz"
 
 	public static final int MAX_5DICE = 7775;  // aka "66666"	
 	public static final int MAX_8K = 8191;
@@ -218,7 +219,43 @@ public class Diceware {
 
 	/** Returns a single random character from the SPECIAL_CHARS string. */
     public static char getRandomSpecialChar() {
-    	int pos = random.nextInt( SPECIAL_CHARS.length() );
-    	return SPECIAL_CHARS.charAt( pos );
+    	return getRandomChar( SPECIAL_CHARS );
     }
+    
+	/** Returns a single random character from the LEET_CHARS string. */
+    public static char getRandomLeetChar() {
+    	return getRandomChar( LEET_CHARS );
+    }
+    
+	/** Returns a single random character from the "pool"  string. */
+    public static char getRandomChar( String pool ) {
+    	int pos = random.nextInt( pool.length() );
+    	return pool.charAt( pos );
+    }
+
+	/** Updates the given word with a leet character at the given position. */
+	public static String updateLeetChar( String word, int position ) {
+		char replaceMe = word.toLowerCase().toCharArray()[ position ];
+		int mapPosition = "abcdefghijklmnopqrstuzwxyz".indexOf( replaceMe );
+		if ( -1 != mapPosition ) {
+			char [] chars = word.toCharArray();
+			chars[ position ] = LEET_CHARS.charAt( mapPosition );
+			return new String( chars );
+		}
+		return word;
+	}
+	
+	/** Updates the given word with a leet character at the all positions. */
+	public static String updateLeet( String word ) {
+		if (null == word || word.length() < 1) return word;
+		char [] wordLower = word.toLowerCase().toCharArray();
+		for ( int i = 0; i < wordLower.length; i++ ) {
+			char replaceMe = wordLower[ i ];
+			int mapPosition = "abcdefghijklmnopqrstuzwxyz".indexOf( replaceMe );
+			if ( -1 != mapPosition ) {
+				wordLower[ i ] = LEET_CHARS.charAt( mapPosition );
+			}
+		}
+		return new String( wordLower );
+	}
 }
