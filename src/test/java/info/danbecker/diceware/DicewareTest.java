@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
@@ -163,6 +164,34 @@ public class DicewareTest {
 			assertNull( "pass phrase", e);
 		}
 		
+	}
+
+	@Test
+    public void testCharRandomization() {
+		final String TEST_WORD = "foo";
+		final String RANDOMIZED_WORD = Diceware.updateRandomChar( TEST_WORD, 0 );
+		
+		assertNotEquals( "random char", TEST_WORD, RANDOMIZED_WORD );		
+		assertNotEquals( "random char", TEST_WORD.charAt(0), RANDOMIZED_WORD.charAt(0));		
+		assertEquals( "random char", TEST_WORD.charAt(1), RANDOMIZED_WORD.charAt(1));		
+		assertEquals( "random char", TEST_WORD.charAt(2), RANDOMIZED_WORD.charAt(2));		
+		assertNotEquals( "random char", -1, Diceware.SPECIAL_CHARS.indexOf( RANDOMIZED_WORD.charAt(0) ));
+		
+		final String RANDOMIZED_WORD2 = Diceware.updateRandomChar( TEST_WORD, 2 );
+		assertNotEquals( "random char", TEST_WORD, RANDOMIZED_WORD2 );		
+		assertEquals( "random char", TEST_WORD.charAt(0), RANDOMIZED_WORD2.charAt(0));		
+		assertEquals( "random char", TEST_WORD.charAt(1), RANDOMIZED_WORD2.charAt(1));		
+		assertNotEquals( "random char", TEST_WORD.charAt(2), RANDOMIZED_WORD2.charAt(2));		
+		assertNotEquals( "random char", -1, Diceware.SPECIAL_CHARS.indexOf( RANDOMIZED_WORD2.charAt(2) ));
+
+		final String RANDOMIZED_WORD3 = Diceware.updateRandomChar( TEST_WORD );
+		System.out.println( "Original/Randomized word=" + TEST_WORD + "/" + RANDOMIZED_WORD3);
+		assertNotEquals( "random char", TEST_WORD, RANDOMIZED_WORD3 );
+		for ( int i = 0; i < TEST_WORD.length(); i++ ) {
+			assertTrue( "random char", (TEST_WORD.charAt( i ) == RANDOMIZED_WORD3.charAt( i )) ||
+									   -1 != Diceware.SPECIAL_CHARS.indexOf( RANDOMIZED_WORD3.charAt(i) ));
+		}
+
 	}
 
 }

@@ -145,10 +145,7 @@ public class Diceware {
 			
 			// Special characters?
 			if (( WordOption.ALL == specialChars ) || (( WordOption.ONE == specialChars ) && ( i == randomWord ))) {
-				int randomPosition = random.nextInt(  word.length() );
-				char [] chars = word.toCharArray();
-				chars[ randomPosition ] = getRandomSpecialChar();
-				word = new String( chars );
+				word = updateRandomChar( word );
 			}
 			
 			sb.append( word );			
@@ -156,7 +153,7 @@ public class Diceware {
 		
 		return sb.toString();
 	}
-	
+
 	/** 
 	 * Converts an int such as 1, 6, 123, 654321 to base 6 String.
 	 * The string is ordinal adjusted to 0 => "1"
@@ -207,6 +204,18 @@ public class Diceware {
 	    }
 	}
 	
+	/** Updates the given word with a random special character at the given position. */
+	public static String updateRandomChar( String word, int position ) {
+		char [] chars = word.toCharArray();
+		chars[ position ] = getRandomSpecialChar();
+		return new String( chars );
+	}
+
+	/** Updates the given word with a random special character. */
+	public static String updateRandomChar( String word ) {
+		return updateRandomChar( word, random.nextInt(  word.length() ));
+	}
+
 	/** Returns a single random character from the SPECIAL_CHARS string. */
     public static char getRandomSpecialChar() {
     	int pos = random.nextInt( SPECIAL_CHARS.length() );
